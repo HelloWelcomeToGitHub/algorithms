@@ -6,6 +6,7 @@
 class String {
  private:
   char* array;
+  unsigned int length;
 
  public:
   /** Constructors */
@@ -126,6 +127,11 @@ class String {
    * O(?)
    */
   String substr(int, int) const;
+
+  char inttochar(int);
+
+  int chartoint(char);
+
 };
 
 TEST_CASE("Append") {
