@@ -29,6 +29,7 @@ String::~String(){
 
 //O(N)
 char String::at(int x) const{
+    char q;
     if(x < 0 || x > length){
         throw "error";
     }
@@ -114,7 +115,6 @@ void String::remove(int x){
 
 //O(N)
 void String::append(char c){
-
 	char *new_arr = new char[length+2];
 
 	for(int i = 0; i < length; ++i) new_arr[i] = array[i];
