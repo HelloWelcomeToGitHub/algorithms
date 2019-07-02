@@ -10,6 +10,76 @@ void copy_arr(int* arr, int* temp, int n) {
   }
 }
 
+/*Strand Sort
+
+ Pseudocode
+First, check if the array is empty
+If so, throw an error
+Else, pop the first element into a second array
+For all subsequent elements of the second array,
+	Check if they are greater or equal to first element
+	If so, pop them into the second array
+    Check if the third, final array is sorted, and if so place contents in order into third array
+	Else append them to the partially filled third array
+	Repeat operation for remaining elements in the first array
+
+
+Analysis:
+O(n^2)
+o(n) (if array already sorted)
+theta(1)
+*/
+
+bool empty(int n){
+	if (n == 0){
+		return false;
+	}
+	else{
+		return true;
+	}
+}
+
+void strandSort(int *arr, int n){
+	if(empty(n)){
+		throw "Error: empty array";
+	}
+
+	const int len = n;
+	int finArr[len];
+
+    bool first = false;
+
+	int newArr[n];
+	newArr[0] = arr[0];
+
+	for(int i = 0; i < n; i++){
+		if(arr[i] > newArr[i]){
+			newArr[i+1] = arr[i];
+		}
+	}
+
+	if (first){
+		for(int i = 0; i < n; i++){
+			finArr[i] = newArr[i]
+			first = false;
+		}
+	}
+	else{
+		int end = n - 1;
+		int start = 0;
+		while(!empty(n)){
+			if(newArr[end] > finArr[start]){
+				start++;
+			}
+			else{
+				finArr[start] = newArr[end];
+				end--;
+				start = 0;
+			}
+		}
+	}
+}
+
 // O(1)
 void swap(int* y, int* x) {
   int temp;

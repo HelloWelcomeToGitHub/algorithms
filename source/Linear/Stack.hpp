@@ -1,19 +1,18 @@
 #pragma once
-
+#include "LinkedList.hpp"
 /** Node Class
  * These are the building blocks of the linked list.
  */
-class Node {
+/*class Node {
  private:
-  int data;
-  Node* next;
+    LinkedList* list;
 
  public:
   Node(int d) : data(d) { next = nullptr; }
   ~Node() {}
 
   friend class Stack;
-};
+};*/
 
 /** Stack
  * A container class that stores data using a LIFO

@@ -1,12 +1,36 @@
 #include "LinkedList.hpp"
 
-LinkedList::LinkedList() {}
+LinkedList::LinkedList() {
+    head = nullptr;
+    len = 0;
+}
 
-LinkedList::~LinkedList() {}
+LinkedList::~LinkedList() {
+    clear();
+}
 
-unsigned int LinkedList::length() {}
+unsigned int LinkedList::length() {
+    return len;
+}
 
-void LinkedList::push_front(int d) {}
+void LinkedList::push_front(int d) {
+    Node *n = new Node(d);
+    if(!head){
+        n = head->next;
+        head = n;
+        head->prev = n;
+    }
+    else{
+    Node* iter = head;
+    while (iter->next != head) {
+      iter = iter->next;
+    }
+    iter->next = n;
+    n->next = head;
+    head = n;
+  }
+  ++len;
+}
 
 int LinkedList::pop_front() {}
 
