@@ -1,5 +1,11 @@
 #pragma once
 
+#ifndef RECURSIVE
+#define RECURSIVE true
+#endif
+
+int floor(int x);
+
 /** Absolute Value.
  * Converts any integer to its absolute value.
  * O(1) and Omega(1), thus,
@@ -138,3 +144,8 @@ int stringtoint(char string[]);
 void reverse(int* arr, int n);
 void reverse(char* arr, int n);
 void reverse(char* arr);
+
+/** Binary Search
+ * Finds a given key in a given sorted array.
+ */
+int binsearch(int* arr, int n, int key);
