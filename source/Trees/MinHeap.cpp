@@ -2,10 +2,7 @@
 #include "../Functions/functions.hpp"
 #include <iostream>
 
-int floor(int x)
-{
-  return (int)x;
-}
+
 
 MinHeap::MinHeap(unsigned int cap){
     array = new int[capacity];
@@ -16,20 +13,42 @@ MinHeap::~MinHeap(){
   delete [] array;
 }
 
+void MinHeap::swap(int *x, int *y)
+{
+    int temp = *x;
+    *x = *y;
+    *y = temp;
+}
+
+
+
+int floor(int x)
+{
+  return (int)x;
+}
+
+/*void MinHeap::moreBigger()
+{
+    int *bigArray = new int[capacity * 2];
+    for (size_t i = 1; i <= size; i++)
+    {
+        bigArray[i] = array[i];
+    }
+    array = bigArray;
+    delete[] bigArray;
+}*/
 /** swim()
    * Restores the heap order property after an element is pushed. Assumes the
    * new element has been pushed at the end of the heap array (right-most node
    * in the bottom level of the tree), and swaps it upwards the tree until it's
    * greater than its parent.
    */
-void MinHeap::swim()
-{
-  for(int i = size; i > 0; i--){
-    if(array[i]<array[i/2]){
-      swap(&array[i],&array[i/2]);
-    }
-  }
-
+void MinHeap::swim(){
+   int i = size;
+   while(i != 0 && array[i/2] < array[i]){
+       swap(&array[i], &array[i/2]);
+       i = i/2;
+   }
 }
 
 /** sink(int i)
@@ -40,19 +59,31 @@ void MinHeap::swim()
    * children are greater than it.
    */
 void MinHeap::sink(int i){
-    if(array[i] > array[2*i] && array[(2*i) +1]){
+    /*if(array[i] > array[(2*i)+1] && array[i] > array[(2*i)]){
         return;
     }
     else if(array[i] > array[2*i]){
-        int temp = array [i];
-        array[i] = array[2*i];
-        array[2*i]= temp;
+        swap(&array[i], &array[2*i]);
+        return sink(2*i);
     }
     else if(array[i] > array[(2*i)+1]){
-        int temp = array[i];
-        array[i] = array[(2*i)+1];
-        array[(2*i)+1]= temp;
+        swap(&array[i], &array[2*i]);
+        return sink(2*i+1);
+    }*/
+    while((i<size && (i*2 < size)) && (array[i] > array[i*2] || array[i] > array[(i*2)+1])){
+        if(array[i] > array[i*2] && array[i*2] < array[(i*2) +1]){
+            swap(&array[i], &array[i*2]);
+            i *= 2;
+        }
+        else if(array[i] > array[(i*2)+1]){
+            swap(&array[i], &array[(i*2)+1]);
+            i = (i * 2) + 1;
+        }
+        else{
+            break;
+        }
     }
+
 }
 
 /** search(int i, int data)
@@ -62,7 +93,15 @@ void MinHeap::sink(int i){
    */
 bool MinHeap::search(int i, int data)
 {
-    return 0;
+    if(size == 0){
+        throw "nothing to search";
+    }
+    for(int j = 1; j<=size;j++){
+        if(array[j] == i){
+            return true;
+        }
+    }
+    return search(i,data);
 }
 
 /** erase(int i, int data)
@@ -76,27 +115,16 @@ void MinHeap::erase(int i, int data)
     {
         if (array[i] == array[size])
         {
+            remove(array[i]);
         }
-        swap(&array[i], &array[size]);
+    }
+    else{
+         erase(++i,data);
     }
 }
 
-void MinHeap::swap(int *x, int *y)
-{
-    int temp = *x;
-    *x = *y;
-    *y = temp;
-}
-void MinHeap::moreBigger()
-{
-    int *bigArray = new int[capacity * 2];
-    for (size_t i = 0; i < size; i++)
-    {
-        bigArray[i] = array[i];
-    }
-    array = bigArray;
-    delete[] bigArray;
-};
+
+
 
 /** push(int data)
    * Inserts data into the MinHeap such that the heap order property is
@@ -105,10 +133,23 @@ void MinHeap::moreBigger()
    */
 void MinHeap::push(int data)
 {
-    if (size == capacity)
-        moreBigger();
+    if (size == capacity){
+        int *bigArray = new int[capacity * 2];
+        for (size_t i = 1; i <= size; i++)
+        {
+            bigArray[i] = array[i];
+        }
+        array = bigArray;
+        delete[] bigArray;
+        //moreBigger(); function couldn't figure how to incorporate it
+    }
     size++;
     array[size] = data;
+    /*int i = size;
+    while(i != 0 && array[i/2] > array[i]){
+       swap(&array[i], &array[i/2]);
+       i = i/2;
+    }*/
 }
 
 /** count()
@@ -130,6 +171,7 @@ int MinHeap::pop()
     {
         throw "Empty heap";
     }
+    swap(&array[size], &array[1]);
     size--;
     return array[1];
 }
@@ -153,7 +195,18 @@ int MinHeap::peek()
    */
 bool MinHeap::search(int data)
 {
-    return 0;
+    int i = 0;
+    while(i < size){
+        if(i>=size || size == 0){
+        throw "Empty";
+        }else if(data<array[i]){
+        return false;
+        }else if(array[i]==data){
+        return true;
+        }else{
+        return search(i++, data);
+        }
+    }
 }
 
 /** remove(int i)
@@ -161,17 +214,20 @@ bool MinHeap::search(int data)
    * top-to-bottom) and returns its value.
    * Throws an error if the heap is empty or the index is out of bounds.
    */
-int MinHeap::remove(int i)
-{
-    if (i > size || i == 0 || size == 0)
-        throw "Error";
-    if (!search(i))
-    {
-        throw "Not Found";
+int MinHeap::remove(int i){
+    if(i>size || size == 0 || i == 0){
+       throw "Error";
     }
-    //Then swap with root, delete root, trickleUp
-    return i;
-}
+    if(!search(array[i])){
+      throw "Not found";
+    }
+    int ret = array[i];
+    swap(&array[size], &array[i]);
+    size--;
+    sink(i);
+    return ret;
+
+  }
 
 /** erase(int data)
    * Searches the MinHeap for the given data, and deletes it if it's found,
@@ -180,7 +236,7 @@ int MinHeap::remove(int i)
    */
 void MinHeap::erase(int data)
 {
-    return;
+    erase(0, data);
 }
 
 /** print()
@@ -189,7 +245,8 @@ void MinHeap::erase(int data)
    */
 void MinHeap::print(std::ostream &oss)
 {
-    for(int i = 0; i < size; i++){
-        oss << array[i] << ",";
+    for(int i = 0; i <= size; i++){
+        oss << array[i] << ", ";
     }
+    std::cout << "\n";
 }

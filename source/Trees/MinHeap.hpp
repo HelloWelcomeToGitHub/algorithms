@@ -11,6 +11,9 @@ class MinHeap {
   unsigned int capacity;
   int size;
 
+  void swap(int *x, int *y);
+
+
   /** swim()
    * Restores the heap order property after an element is pushed. Assumes the
    * new element has been pushed at the end of the heap array (right-most node
@@ -41,8 +44,7 @@ class MinHeap {
    * Does nothing if data is not found in the subtree.
    */
   void erase(int i, int data);
-  void swap(int *x, int *y);
-  void moreBigger();
+
 
  public:
   MinHeap(unsigned int cap = 16);
