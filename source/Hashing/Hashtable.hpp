@@ -18,9 +18,9 @@ class HashTable {
     public:
         HashTable();
         ~HashTable();
-        
+
         HashTable(int indices);
-        
+
         /** Size()
          * Returns the value of the data member size, the number of indices in the table
          */
@@ -28,13 +28,13 @@ class HashTable {
 
 
         /** insert(String key, int data)
-         * Insert the value of data into the chain at index hash(key) 
+         * Insert the value of data into the chain at index hash(key)
          */
         void insert(const String& key, int data);
 
 
         /** remove(String key)
-         * Removes the first instance of the given key from the chain located at hash(key) 
+         * Removes the first instance of the given key from the chain located at hash(key)
          */
         void remove(String& key);
 
@@ -60,5 +60,5 @@ class HashTable {
         /** print()
          * Calls the Linked List print() method on each of its chains
          */
-        void print();
+        void print(std::ostream& oss = std::cout);
 };

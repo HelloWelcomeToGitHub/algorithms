@@ -1,6 +1,6 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "../doctest.h"
-
+#include "../String/String.hpp"
 #include "Hashtable.hpp"
 
 TEST_CASE("Default Constructor") {
@@ -31,7 +31,7 @@ TEST_CASE("Insert") {
         REQUIRE(test.search(str2) == 0);
         REQUIRE(test.search(str1) == 1);
     }
-    
+
     SUBCASE("Multiple Insertions") {
         for (int i = 0; i < 10; ++i) {
             String str('a' + i);
@@ -59,7 +59,7 @@ TEST_CASE("Remove") {
         REQUIRE_FALSE(test.search(hello_str));
         REQUIRE(test.is_empty() == 1);
     }
-    
+
     SUBCASE("Multiple Insertions") {
         for (int i = 0; i < 10; ++i) {
             String str('a' + i);
@@ -93,7 +93,7 @@ TEST_CASE("Get") {
         REQUIRE_EQ(test.get(world_str1), 5);
         REQUIRE_EQ(test.get(world_str2), 10);
     }
-    
+
     SUBCASE("Multiple Insertions") {
         for (int i = 0; i < 10; ++i) {
             String str('a' + i);

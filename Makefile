@@ -25,7 +25,7 @@ String: source/String/String.test.cpp String.o functions.o
 	$(CXX) $(FLAGS) $^
 	./a.out
 
-$(LISTS): source/LinkedList/LinkedList.test.cpp 
+$(LISTS): source/LinkedList/LinkedList.test.cpp
 	$(CXX) $(FLAGS) $^ source/LinkedList/$@.cpp && ./a.out
 
 Queue: source/Queue/Queue.test.cpp Queue.o $(if $(LIST),$(LIST).o,SLL.o)
@@ -49,6 +49,10 @@ calculator: calculator.cpp Stack.o SLL.o String.o functions.o
 	./a.out
 
 lexographic: source/Algorithms/lexographic.test.cpp String.o functions.o Trie.o
+	$(CXX) $(FLAGS) $^
+	./a.out
+
+hash: source/Hashing/Hashtable.test.cpp source/Hashing/Hashtable.cpp source/String/String.o functions.o source/LinkedList/SLL.cpp
 	$(CXX) $(FLAGS) $^
 	./a.out
 
