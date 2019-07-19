@@ -3,6 +3,7 @@
 #define UNVISITED 0
 #define VISITED 1
 
+//depth first breadth first
 /** hamiltonian_cycle(Graph& G)
  * Decides whether there exists a hamiltonian cycle in G by making a call to the
  * recursive function by the same name.
