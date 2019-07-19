@@ -1,17 +1,25 @@
-# Assignment 08: Lexicographic String Sorting
+# Assignment 09: Karp-Rabin Substring Search
 
-For this assignment you will be implementing an algorithm capable of sorting strings lexicographically.
+For this assignment you will be implementing an algorithm capable of pattern-matching substrings in a larger body of text.
 
 ## The Algorithm
 
-Lexicographic sorting is the process of sorting strings in alphabetic order.
+Karp-Rabin (or Rabin-Karp) uses rolling hashing to find substrings within a larger string.
 
-> Hint: We have already constructed a fantastic data structure to accomplish this goal.
+Pseudocode for this algorithm is as follows:
 
-## Example
+```python
+def KarpRabin(text, pattern):
+    hash_pattern = hash(pattern)
+    for i in range(0, len(text)):
+        if hash_pattern == hash(text[i:i + len(pattern)]) and text[i:i + len(pattern)] == pattern:
+            return True
+    return False
+```
 
-sort(["abz", "abc"], 2) -> ["abc", "abz"]
-sort(["ab", "ba", "aa"], 3) -> ["aa", "ab", "ba"]
+Essentially, we hash the pattern we are looking for, then compare that hash to a hash of a small piece of the main text.
+
+For this task, we use a special "rolling hash" function, similar to the one we've seen on the Princeton slides.
 
 ## Instructions
 
@@ -26,9 +34,9 @@ This assignment will be hosted on Github Classroom.
 3. Getting things in order
    1. Open your new folder in VS Code
 4. Implement the algorithm **Commit and Push your work after each task**
-   1. Locate the header file `lexicographic.hpp` under `Algorithms`
+   1. Locate the header file `karprabin.hpp` under `Algorithms`
    2. In the docstring for your sorting algorithm, detail your pseudocode for accomplishing this task.
-   3. Under the signature `sort(String* arr[], int n)` implement a lexicographic sorting algorithm.
+   3. Under the provided signature implement the algorithm.
    4. Analyze your work, providing the O(?) runtime.
 5. Submit your work (`git add . && git commit -m "Done" && git push`
 
@@ -39,15 +47,6 @@ This assignment will be hosted on Github Classroom.
 | Functional Correctness | 80     |
 | Analysis               | 10     |
 | Quality                | 10     |
-
-## Bonus
-
-For this assignment, you may accrue an additional 25 bonus points by implementing the `Burstsort` algorithm, which is a slightly more advanced implementation of lexicographic sorting.
-
-### Resources
-
-- [The paper that introduced burtsort](https://people.eng.unimelb.edu.au/jzobel/fulltext/acmjea04.pdf)
-- [Wikipedia Entry](https://en.wikipedia.org/wiki/Burstsort)
 
 ## Submission
 
